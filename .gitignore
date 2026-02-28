@@ -1,0 +1,8 @@
+# Claude working directory (session artifacts, research, plans)
+.claude-dev/
+
+# Claude plan mode files
+.claude/plans/
+
+# Claude auto memory
+.claude/memory/
