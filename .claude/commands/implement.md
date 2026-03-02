@@ -25,6 +25,23 @@ Each subagent should:
 3. For any tasks involving visual, behavioral, or user-facing changes — **describe what changed and ask for my confirmation** before committing
 4. Only after all checks pass and I confirm (if needed): make atomic git commits per task — `type(scope): description`
 5. Mark completed tasks in `.claude-dev/plan.md` (change `[ ]` to `[x]`)
+6. **Auto-save progress** — write `.claude-dev/progress.md` (overwrite each time):
+
+```
+## Auto-saved Progress
+
+**Saved at:** [date and time]
+**Current branch:** [branch name]
+**Last completed wave:** [wave number]
+**Next wave:** [wave number, or "all complete"]
+**Completed tasks:** [count of [x] tasks] / [total task count]
+
+### Commits This Session
+[git log --oneline for commits made during this implementation run]
+
+### Remaining Tasks
+[list of unchecked [ ] tasks from plan.md, with their wave numbers]
+```
 
 Rules:
 - Do not stop until all tasks and phases are completed

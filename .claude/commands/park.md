@@ -21,6 +21,7 @@ Pause the current session and save state for resuming later.
 - Completed waves: [list wave numbers that are fully done]
 - Current wave: [wave number in progress]
 - Next task: [exact task description from the todo list]
+- Completed tasks: [count of [x] tasks] / [total task count]
 
 ### Recent Commits
 [last 5-10 commits from git log]

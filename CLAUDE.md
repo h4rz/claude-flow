@@ -15,23 +15,24 @@ Each file in `.claude/commands/` corresponds to a slash command:
 | File | Slash Command | Role |
 |------|--------------|------|
 | `research.md` | `/research` | Deep codebase read → `.claude-dev/research.md` (spawns Opus) |
-| `draft.md` | `/draft` | Write `.claude-dev/plan.md` (spawns Opus) |
+| `draft.md` | `/draft` | Structured interview + write `.claude-dev/plan.md` (spawns Opus) |
+| `review.md` | `/review` | Adversarial plan review → `.claude-dev/review.md` (spawns Opus) |
 | `annotate.md` | `/annotate` | Process inline notes in plan, clean document |
 | `todo.md` | `/todo` | Append wave-based task checklist to plan |
-| `implement.md` | `/implement` | Execute plan with parallel waves + atomic commits |
+| `implement.md` | `/implement` | Execute plan with parallel waves + atomic commits + auto-save |
 | `park.md` | `/park` | Save session state to `.claude-dev/session.md` for resuming later |
-| `pickup.md` | `/pickup` | Restore session state and continue implementation from where it left off |
+| `pickup.md` | `/pickup` | Restore session state (from `session.md` or `progress.md`) and continue |
 | `verify.md` | `/verify` | Run checks + walk through manual verification |
 | `fix.md` | `/fix` | Investigate, fix, verify, commit a specific issue |
 | `cleanup.md` | `/cleanup` | Wipe `.claude-dev/` working files |
 
 ## Workflow Architecture
 
-**Working directory:** `.claude-dev/` (auto-created, auto-gitignored). Contains `research.md`, `plan.md`, `prompt.md`, `session.md`. Entry-point command (`/research`) wipes it on start.
+**Working directory:** `.claude-dev/` (auto-created, auto-gitignored). Contains `research.md`, `interview.md`, `plan.md`, `review.md`, `prompt.md`, `progress.md`, `session.md`. Entry-point command (`/research`) wipes it on start.
 
-**Opus subagent pattern:** `/research` and `/draft` write a prompt to `.claude-dev/prompt.md` then spawn Opus via:
+**Opus subagent pattern:** `/research`, `/draft`, and `/review` write a prompt to `.claude-dev/prompt.md` then spawn Opus via:
 ```bash
-env -u CLAUDECODE claude -p --model claude-opus-4-6 --max-turns 25 --allowedTools "Read,Write,Glob,Grep,Bash(find:*),Bash(grep:*),..." < .claude-dev/prompt.md
+env -u CLAUDECODE claude -p --model claude-opus-4-6 --max-turns 25 --allowedTools "Read,Write,Glob,Grep,Bash(ls:*),Bash(wc:*)" < .claude-dev/prompt.md
 ```
 Falls back to current session model if Opus is unavailable.
 
@@ -41,16 +42,19 @@ Falls back to current session model if Opus is unavailable.
 
 **Pipeline order:**
 ```
-/research → /draft → /annotate (repeat) → /todo → /implement → /verify → /fix (repeat)
+/research → /draft (with interview) → /review (optional) → /annotate (repeat) → /todo → /implement (with auto-save) → /verify → /fix (repeat)
 ```
 
-**Session persistence:** `/park` saves current wave progress, git state, uncommitted changes, and next steps to `.claude-dev/session.md`. `/pickup` reads that file and continues from the first incomplete task.
+**Session persistence:** `/park` saves current wave progress, git state, uncommitted changes, and next steps to `.claude-dev/session.md`. `/implement` auto-saves a lightweight checkpoint to `.claude-dev/progress.md` after each completed wave. `/pickup` recovers from whichever is newer.
 
 **Command interactions:**
 - `/draft` does NOT wipe `.claude-dev/` — it preserves existing `research.md` to reference during planning
+- `/draft` writes `.claude-dev/interview.md` when the task warrants questions (skips for small tasks)
 - `/research` wipes `.claude-dev/` (clean slate)
+- `/review` does NOT modify `plan.md` — it writes `review.md` and adds `NOTE:` annotations for `/annotate` to process
 - `/annotate` can be run repeatedly until the plan is approved
-- `/implement` marks tasks complete by changing `[ ]` to `[x]` in `plan.md`
+- `/implement` marks tasks complete by changing `[ ]` to `[x]` in `plan.md` and auto-saves `progress.md` after each wave
+- `/pickup` checks both `session.md` and `progress.md`, using the newer one for position data
 
 **Escalation gate:**
 - `/fix` — if the fix requires design changes, stop and describe; user may want to update the plan first
