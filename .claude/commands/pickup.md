@@ -32,3 +32,5 @@ Resume a previously paused or interrupted session.
    - **Continue auto-saving** `.claude-dev/progress.md` after each completed wave
 
 Do not re-do completed tasks. Start from the first incomplete task in the current wave.
+
+**Next:** When all tasks are complete, run `/verify` to confirm the work is correct.

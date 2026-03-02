@@ -35,3 +35,5 @@ If that fails (Opus not available, CLI error, etc.), fall back to doing the rese
 After research completes, read `.claude-dev/research.md` and present a brief summary. If anything is ambiguous or there are conflicting patterns, ask me before proceeding.
 
 Do not plan or implement anything.
+
+**Next:** Run `/draft <feature>` to create an implementation plan based on these findings.

@@ -1,4 +1,4 @@
-Verify the work done in `.claude-dev/plan.md`.
+Verify the work done in `.claude-dev/plan.md`. First, verify `.claude-dev/plan.md` exists. If it doesn't, say so and stop — run `/draft` first.
 
 Read the plan and for each requirement it was supposed to satisfy:
 
@@ -9,3 +9,5 @@ Read the plan and for each requirement it was supposed to satisfy:
 3. **For any failures** — Investigate the root cause, describe what's wrong, suggest a specific fix, and wait for my approval before fixing.
 
 Keep it focused — just confirm the plan was delivered correctly.
+
+**Next:** For failures that need dedicated investigation, use `/fix <issue>`. When all checks pass, the task is complete — run `/cleanup` to remove working files, or `/research <area>` to start a new task.

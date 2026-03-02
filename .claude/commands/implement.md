@@ -1,4 +1,4 @@
-Read `.claude-dev/plan.md` and implement it all. Follow the plan exactly — it is the spec.
+Read `.claude-dev/plan.md` and implement it all. Follow the plan exactly — it is the spec. First, verify `.claude-dev/plan.md` exists. If it doesn't, say so and stop — run `/draft` first.
 
 Before starting, quickly identify the project's language, framework, and tooling (check for package.json, Cargo.toml, pyproject.toml, go.mod, Makefile, etc.) so you use the correct type checker, linter, and test runner.
 
@@ -49,4 +49,8 @@ Rules:
 
 If implementation reveals a problem not caught during planning, stop and flag it. Describe the specific issue, suggest a fix, and wait for approval before continuing.
 
+If context is running low during implementation, suggest running `/park` to save session state before it's lost.
+
 Do not add features, optimizations, or "improvements" not in the plan.
+
+**Next:** When all tasks are complete, run `/verify` to confirm the work is correct.

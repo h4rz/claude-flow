@@ -97,3 +97,5 @@ If that fails (Opus not available, CLI error, etc.), fall back to doing the plan
 After the plan is written, read `.claude-dev/plan.md` and present a summary. Ask about any remaining open questions not already resolved above.
 
 Do not implement yet.
+
+**Next:** Review `plan.md`. Add inline notes and run `/annotate` to process them (repeat until right). Run `/review` for adversarial critique. When the plan is ready, run `/todo` to generate the task breakdown.
