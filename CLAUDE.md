@@ -22,7 +22,7 @@ Each file in `.claude/commands/` corresponds to a slash command:
 | `implement.md` | `/implement` | Execute plan with parallel waves + atomic commits + auto-save |
 | `park.md` | `/park` | Save session state to `.claude-dev/session.md` for resuming later |
 | `pickup.md` | `/pickup` | Restore session state (from `session.md` or `progress.md`) and continue |
-| `verify.md` | `/verify` | Run checks + walk through manual verification |
+| `verify.md` | `/verify` | Generate scoped tests + run checks + walk through manual verification |
 | `fix.md` | `/fix` | Investigate, fix, verify, commit a specific issue |
 | `cleanup.md` | `/cleanup` | Wipe `.claude-dev/` working files |
 

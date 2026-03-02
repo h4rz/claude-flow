@@ -16,7 +16,7 @@ Inspired by [Boris Tane's workflow](https://boristane.com/blog/how-i-use-claude-
 | `/implement` | Execute the plan: parallel subagents per wave, atomic commits, auto-saves progress after each wave |
 | `/park` | Save session state to `.claude-dev/session.md` — use when context is running out |
 | `/pickup` | Recover from `session.md` (explicit park) or `progress.md` (auto-saved) — whichever is newer |
-| `/verify` | Confirm the work is correct: automated checks + manual walkthrough |
+| `/verify` | Generate scoped tests for changed code, run automated checks, manual walkthrough |
 | `/fix <issue>` | Investigate, fix, commit, and verify a specific issue found post-verify |
 | `/cleanup` | Manual wipe of `.claude-dev/` (entry point auto-cleans) |
 
@@ -126,7 +126,7 @@ Claude creates a feature branch (`feat/push-notifications` or `feat/PROJ-456-pus
 ```
 > /verify
 ```
-Claude runs the type checker and tests, then walks you through: "Open the app on a physical device, send a test push from Firebase console, tap it — you should land on the chat screen for that conversation."
+Claude identifies your test framework, then writes scoped tests for the notification service and deep-link handler (unit tests, regression tests for touched code paths) and commits them. Then runs the full test suite and type checker. Finally walks you through: "Open the app on a physical device, send a test push from Firebase console, tap it — you should land on the chat screen for that conversation."
 
 You notice tapping a notification while the app is foregrounded doesn't do anything:
 ```
