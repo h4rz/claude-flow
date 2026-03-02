@@ -9,7 +9,7 @@ Inspired by [Boris Tane's workflow](https://boristane.com/blog/how-i-use-claude-
 | Command | What it does |
 |---------|-------------|
 | `/research <area>` | Deep-read codebase, write findings to `.claude-dev/research.md` (spawns Opus) |
-| `/plan <feature>` | Write `.claude-dev/plan.md` with snippets, file paths, and verification steps (spawns Opus) |
+| `/draft <feature>` | Write `.claude-dev/plan.md` with snippets, file paths, and verification steps (spawns Opus) |
 | `/annotate` | Process your inline notes in the plan, repeat until right |
 | `/todo` | Add wave-based task checklist — independent tasks grouped for parallel execution |
 | `/implement` | Execute the plan: parallel subagents per wave, atomic commits, type checks |
@@ -25,7 +25,7 @@ All working files live in `.claude-dev/` — auto-created and auto-gitignored on
 
 ```
 /research <area>            → review .claude-dev/research.md
-/plan <feature>             → review .claude-dev/plan.md in your editor
+/draft <feature>            → review .claude-dev/plan.md in your editor
   (add inline notes)
 /annotate                   → repeat until plan is right
 /todo                       → review task breakdown
@@ -40,7 +40,7 @@ All working files live in `.claude-dev/` — auto-created and auto-gitignored on
 
 ## Key Features
 
-**Auto Opus for thinking** — `/research` and `/plan` automatically spawn an Opus subagent (`env -u CLAUDECODE claude -p --model claude-opus-4-6 --max-turns 25`) for the thinking-heavy work. Falls back to the current session model if Opus isn't available. Your main session stays lightweight.
+**Auto Opus for thinking** — `/research` and `/draft` automatically spawn an Opus subagent (`env -u CLAUDECODE claude -p --model claude-opus-4-6 --max-turns 25`) for the thinking-heavy work. Falls back to the current session model if Opus isn't available. Your main session stays lightweight.
 
 **Auto feature branches** — `/implement` shows you the current branch and asks if you want to create a new one. If you mention a Jira ticket (e.g. `PROJ-123`), it uses that as the branch name: `feat/PROJ-123-short-description`.
 
@@ -61,7 +61,7 @@ Wave 3 (sequential): Integration wiring, final verification
 Claude deep-reads your codebase — services, hooks, navigation, existing Firebase setup — and writes `.claude-dev/research.md` with findings like "FCM is initialized in `src/services/firebase.ts` but only used for analytics, no push token registration exists."
 
 ```
-> /plan add push notifications that route users to the relevant screen when tapped
+> /draft add push notifications that route users to the relevant screen when tapped
 ```
 You review `.claude-dev/plan.md`. Claude proposes changes across `src/services/notifications.ts`, `src/hooks/useNotifications.ts`, `src/navigation/DeepLinkHandler.tsx`, and the native `AppDelegate.mm` / `AndroidManifest.xml`. Includes code snippets, verification steps like "send a test notification via Firebase console and confirm it opens the chat screen."
 
