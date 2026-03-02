@@ -13,8 +13,8 @@ Inspired by [Boris Tane's workflow](https://boristane.com/blog/how-i-use-claude-
 | `/annotate` | Process your inline notes in the plan, repeat until right |
 | `/todo` | Add wave-based task checklist — independent tasks grouped for parallel execution |
 | `/implement` | Execute the plan: parallel subagents per wave, atomic commits, type checks |
-| `/pause` | Save session state to `.claude-dev/session.md` — use when context is running out |
-| `/resume` | Restore session state and continue from where you left off |
+| `/park` | Save session state to `.claude-dev/session.md` — use when context is running out |
+| `/pickup` | Restore session state and continue from where you left off |
 | `/verify` | Confirm the work is correct: automated checks + manual walkthrough |
 | `/fix <issue>` | Investigate, fix, commit, and verify a specific issue found post-verify |
 | `/cleanup` | Manual wipe of `.claude-dev/` (entry point auto-cleans) |
@@ -31,9 +31,9 @@ All working files live in `.claude-dev/` — auto-created and auto-gitignored on
 /todo                       → review task breakdown
 /implement                  → supervise, give terse corrections
   (if context runs out)
-  /pause                    → saves progress to .claude-dev/session.md
+  /park                     → saves progress to .claude-dev/session.md
   (new session)
-  /resume                   → picks up from the first incomplete task
+  /pickup                   → picks up from the first incomplete task
 /verify                     → confirm it works
 /fix <issue>                → fix issues, re-run /verify until clean
 ```
@@ -51,7 +51,7 @@ Wave 2 (parallel): Implement service layer, implement API handler
 Wave 3 (sequential): Integration wiring, final verification
 ```
 
-**Session persistence** — `/pause` snapshots your current wave, git state, and uncommitted changes into `.claude-dev/session.md`. Start a fresh session, run `/resume`, and it picks up from the first incomplete task — no re-reading the whole plan, no re-doing completed work.
+**Session persistence** — `/park` snapshots your current wave, git state, and uncommitted changes into `.claude-dev/session.md`. Start a fresh session, run `/pickup`, and it picks up from the first incomplete task — no re-reading the whole plan, no re-doing completed work.
 
 ## Example: Adding Push Notifications to a React Native App
 
@@ -116,7 +116,7 @@ your-project/
 │   ├── research.md
 │   ├── plan.md
 │   ├── prompt.md
-│   └── session.md         ← created by /pause
+│   └── session.md         ← created by /park
 ├── .gitignore             ← .claude-dev/ added automatically
 └── ...
 ```

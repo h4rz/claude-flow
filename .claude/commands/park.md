@@ -37,4 +37,4 @@ Pause the current session and save state for resuming later.
 
 4. If there are uncommitted changes that are ready to commit (type checker/linter passes), ask me if I want to commit them before pausing. If they're not ready, note them explicitly in session.md so the next session knows to handle them.
 
-5. Confirm the session state has been saved and that `/resume` will be able to pick up from here.
+5. Confirm the session state has been saved and that `/pickup` will be able to pick up from here.

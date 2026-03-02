@@ -19,8 +19,8 @@ Each file in `.claude/commands/` corresponds to a slash command:
 | `annotate.md` | `/annotate` | Process inline notes in plan, clean document |
 | `todo.md` | `/todo` | Append wave-based task checklist to plan |
 | `implement.md` | `/implement` | Execute plan with parallel waves + atomic commits |
-| `pause.md` | `/pause` | Save session state to `.claude-dev/session.md` for resuming later |
-| `resume.md` | `/resume` | Restore session state and continue implementation from where it left off |
+| `park.md` | `/park` | Save session state to `.claude-dev/session.md` for resuming later |
+| `pickup.md` | `/pickup` | Restore session state and continue implementation from where it left off |
 | `verify.md` | `/verify` | Run checks + walk through manual verification |
 | `fix.md` | `/fix` | Investigate, fix, verify, commit a specific issue |
 | `cleanup.md` | `/cleanup` | Wipe `.claude-dev/` working files |
@@ -44,7 +44,7 @@ Falls back to current session model if Opus is unavailable.
 /research → /plan → /annotate (repeat) → /todo → /implement → /verify → /fix (repeat)
 ```
 
-**Session persistence:** `/pause` saves current wave progress, git state, uncommitted changes, and next steps to `.claude-dev/session.md`. `/resume` reads that file and continues from the first incomplete task.
+**Session persistence:** `/park` saves current wave progress, git state, uncommitted changes, and next steps to `.claude-dev/session.md`. `/pickup` reads that file and continues from the first incomplete task.
 
 **Command interactions:**
 - `/plan` does NOT wipe `.claude-dev/` — it preserves existing `research.md` to reference during planning
