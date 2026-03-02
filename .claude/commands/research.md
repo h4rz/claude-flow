@@ -27,7 +27,7 @@ Do not plan or implement anything. Research only.
 
 Then run:
 ```bash
-env -u CLAUDECODE claude -p --model claude-opus-4-6 --max-turns 25 --allowedTools "Read,Write,Glob,Grep,Bash(find:*),Bash(grep:*),Bash(cat:*),Bash(ls:*),Bash(head:*),Bash(tail:*),Bash(wc:*)" < .claude-dev/prompt.md
+env -u CLAUDECODE claude -p --model claude-opus-4-6 --max-turns 25 --allowedTools "Read,Write,Glob,Grep,Bash(ls:*),Bash(wc:*)" < .claude-dev/prompt.md
 ```
 
 If that fails (Opus not available, CLI error, etc.), fall back to doing the research directly in the current session using the same instructions.
