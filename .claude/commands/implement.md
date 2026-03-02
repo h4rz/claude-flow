@@ -9,10 +9,7 @@ Before starting, quickly identify the project's language, framework, and tooling
 - If yes and no ticket, derive a name from the plan's goal: `git checkout -b feat/short-description`
 - Branch naming: `feat/`, `fix/`, or `chore/` prefix + kebab-case description
 
-**Parallel execution:** Group tasks into waves based on their dependencies. Independent tasks within the same wave should be executed in parallel using subagents (Task tool). Sequential/dependent tasks run in order. Example:
-- Wave 1 (parallel): Create migration file, add service types, write test stubs
-- Wave 2 (parallel): Implement service layer, implement API handler (both depend on wave 1)
-- Wave 3 (sequential): Integration wiring, final verification (depends on wave 2)
+**Parallel execution:** Follow the wave structure in the Todo List section of the plan. Execute independent tasks within each wave in parallel using subagents (Task tool). Run waves sequentially — complete all tasks in a wave before starting the next. If no Todo List exists in the plan, ask me to run `/todo` first.
 
 Each subagent should:
 - Receive the full task context and relevant file paths from the plan
