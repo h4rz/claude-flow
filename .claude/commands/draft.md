@@ -66,14 +66,18 @@ If the task was Small, write: `## Interview skipped — straightforward task` an
 Spawn the planning as an Opus subagent for best results. Write the planning prompt to `.claude-dev/prompt.md` with these instructions (include the derived constraints at the top):
 
 ```
+Your primary task is to write a detailed implementation plan to .claude-dev/plan.md.
+
 I want to: [insert $ARGUMENTS]
 
 ## Constraints (from interview)
 [list every constraint derived from the interview — these are non-negotiable requirements. Omit this section if the interview was skipped.]
 
-Read the relevant source files first. If .claude-dev/research.md exists, read it for context. If .claude-dev/interview.md exists, read it for the full Q&A context. Base the plan entirely on the actual codebase — do not guess at file contents or project conventions.
+**Writing strategy:** After reading the key source files, write an initial draft of .claude-dev/plan.md with your plan so far. Then continue reading and refine the plan as you learn more. Always keep the file up to date — if your turns run out, the latest version of the file is your deliverable.
 
-Write a detailed .claude-dev/plan.md document (overwrite any existing file) outlining how to implement this. The plan must include:
+Read the relevant source files. If .claude-dev/research.md exists, read it for context. If .claude-dev/interview.md exists, read it for the full Q&A context. Base the plan entirely on the actual codebase — do not guess at file contents or project conventions.
+
+The plan must include:
 
 - A clear goal statement (business outcome, not just technical change)
 - Detailed explanation of the approach and why this approach over alternatives
@@ -89,7 +93,7 @@ Do not implement. Write the plan only.
 
 Then run:
 ```bash
-env -u CLAUDECODE claude -p --model claude-opus-4-6 --max-turns 25 --allowedTools "Read,Write,Glob,Grep,Bash(ls:*),Bash(wc:*)" < .claude-dev/prompt.md
+env -u CLAUDECODE claude -p --model claude-opus-4-6 --max-turns 50 --allowedTools "Read,Write,Glob,Grep,Bash(ls:*),Bash(wc:*)" < .claude-dev/prompt.md
 ```
 
 If that fails (Opus not available, CLI error, etc.), fall back to doing the planning directly in the current session using the same instructions.

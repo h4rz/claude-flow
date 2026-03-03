@@ -8,9 +8,13 @@ First, set up a clean workspace:
 Spawn the research as an Opus subagent for best results. Write the research prompt to `.claude-dev/prompt.md` with these instructions:
 
 ```
+Your primary task is to write a detailed research report to .claude-dev/research.md.
+
 Read the following area of the codebase in depth: [insert $ARGUMENTS]
 
-Understand how it works deeply — follow call chains, read implementation bodies, understand data flows end-to-end. Do not skim or read only function signatures. Pay attention to:
+**Writing strategy:** After reading the first 3-5 critical files, write an initial draft of .claude-dev/research.md with your findings so far. Then continue researching and update the file as you learn more. Always keep the file up to date — if your turns run out, the latest version of the file is your deliverable.
+
+Understand how it works deeply — follow call chains, read implementation bodies, understand data flows end-to-end. Do not skim or read only function signatures. Focus on:
 
 - How data flows through the system (inputs → transformations → outputs)
 - Error handling patterns and edge cases already accounted for
@@ -20,14 +24,14 @@ Understand how it works deeply — follow call chains, read implementation bodie
 - Existing utility functions and shared modules that could be reused
 - Test patterns and what's already covered
 
-Write a detailed report of your learnings and findings in .claude-dev/research.md (overwrite any existing file). Include file paths and code references throughout. Flag any uncertainties explicitly.
+Include file paths and code references throughout. Flag any uncertainties explicitly.
 
 Do not plan or implement anything. Research only.
 ```
 
 Then run:
 ```bash
-env -u CLAUDECODE claude -p --model claude-opus-4-6 --max-turns 25 --allowedTools "Read,Write,Glob,Grep,Bash(ls:*),Bash(wc:*)" < .claude-dev/prompt.md
+env -u CLAUDECODE claude -p --model claude-opus-4-6 --max-turns 50 --allowedTools "Read,Write,Glob,Grep,Bash(ls:*),Bash(wc:*)" < .claude-dev/prompt.md
 ```
 
 If that fails (Opus not available, CLI error, etc.), fall back to doing the research directly in the current session using the same instructions.

@@ -5,13 +5,17 @@ First, verify `.claude-dev/plan.md` exists. If it doesn't, say so and stop — t
 Spawn the review as an Opus subagent for best results. Write the review prompt to `.claude-dev/prompt.md` with these instructions:
 
 ```
+Your primary task is to write a review to .claude-dev/review.md.
+
 You are a senior engineer reviewing a plan before implementation begins. Your job is to find problems — assume the plan author is competent and doesn't need encouragement.
+
+**Writing strategy:** After reading the plan and the first few source files it references, write an initial draft of .claude-dev/review.md with findings so far. Then continue reading more source files and update the review as you discover more issues. Always keep the file up to date — if your turns run out, the latest version of the file is your deliverable.
 
 Read `.claude-dev/plan.md` carefully. Also read `.claude-dev/research.md` and `.claude-dev/interview.md` if they exist — these provide context on what was already explored and what constraints were agreed upon.
 
 Then read the actual source files referenced in the plan. Verify that the plan's assumptions about the codebase are correct.
 
-Write `.claude-dev/review.md` with your findings. Organize into these sections (skip any section with no findings):
+Organize findings into these sections (skip any section with no findings):
 
 ## Critical Issues
 Problems that would cause the implementation to fail, break existing functionality, or violate stated constraints. For each:
@@ -50,7 +54,7 @@ Do not modify plan.md. Write review.md only.
 
 Then run:
 ```bash
-env -u CLAUDECODE claude -p --model claude-opus-4-6 --max-turns 25 --allowedTools "Read,Write,Glob,Grep,Bash(ls:*),Bash(wc:*)" < .claude-dev/prompt.md
+env -u CLAUDECODE claude -p --model claude-opus-4-6 --max-turns 50 --allowedTools "Read,Write,Glob,Grep,Bash(ls:*),Bash(wc:*)" < .claude-dev/prompt.md
 ```
 
 If that fails (Opus not available, CLI error, etc.), fall back to doing the review directly in the current session using the same instructions.
